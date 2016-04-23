@@ -1,0 +1,36 @@
+language: android
+jdk: oraclejdk7
+os:
+- linux
+android:
+  components:
+  - platform-tools
+  - tools
+  - build-tools-23.0.3
+  - android-23
+  - extra
+  - extra-android-m2repository
+env:
+  matrix:
+  - ANDROID_SDKS=android-23,sysimg-23  ANDROID_TARGET=android-23  ANDROID_ABI=armeabi-v7a
+before_install:
+- chmod +x gradlew
+deploy:
+  provider: releases
+  api_key:
+    secure: CUosgZurS6lctw1WRNlDJ6Qfqo8XarK0Tokg3KNsoUBLwE5vKh1iYmo1kaQsEbgIhjup3IQeNd1mimjmPEGOmgT+A5MHkSWDSTInodNuqdIteG/hiwRpiqYQk2ir748dvnOOP2/IzZ5amrQJi2i0g8j5GJeg4MV8fXsXWlCr6G4GX5Lc5YSLKM4CFWjPREK4LMAXqvUcSBiRnfU7WBjl5JVu/6ewgurN1XOihlKjsUC69a0LT+jbheQ+lQLLyb0aT0FyByn+sQqKCHoAugGgyCC9uL5reu52MB+4B6W+DzmWURqVsHqqcE6Hk2vT4aJAS7R5bqfQkJb3ckvMIFVLUVaBDAOcI0YUfC+1+ASWeXLn71J3JS8jz+GMkqBA8c16WFUyVjY7K9+Ak5rgI32/+czBBCuFjRGAWGdYP3p3xuIZqFLa7Vnhas8+gEklNs+jXHlnE2TnZdCrFuSlRQbY9V+qepPTvsvRLBsfpYuQIkPbTsEt9jodW5o+iBnd6uzK1UEqWEMnBo6p9N8Yn+jhSkOApvlg12ftbUacU/0m3VWVsTEdaGy3SjJLYujXw+OjncOWQTJighia/CScTdrjdAmHp8+CbkhmMAKfefyweYC0FrSSb1+pj48DhUcLyylllzlaHpnH551Ei9RsU2TtK9OCQd/+WbGf4DMqdUfbgbk=
+  file_glob: true
+  file: build/outputs/aar/*.aar
+  skip_cleanup: true
+  on:
+    tags: true
+    all_branches: true
+script:
+- ./gradlew clean build assemble
+notifications:
+  hipchat:
+    rooms:
+      secure: d28qsmUlvCcT9KSk2JEb6GjpEHPON3UuCskOzevPW24ay48okKtYrdXhEdrFXr+f0A6vJMd1WLQayupxTWGPA9CT0Jtrw6NFHXlp0lyIwprjpuYrVN9sQElqyRPHwGmk0a5todVfJ7Sq5T5Yo9jPg6yEMwJICbT0/HjGwxDEP4BODTK4YIXJC0S6hOIFhc/GHAnGHH35+Uumbw9y4j2gAcSVsY0WqX7S6GWMZk6EjQYusPqMPCiqkscY5bTyMDzQf49elY4qT8lf4dekx7SXKRaANLK3+h6U10IPrjLuI0y3T53je5nc1pOCLSRoi0TEvszlxQ4Eo1hfBy59P+DqOBDS0y/VkTES+9Z2IkjJduiCRSg5Q0sNMcUB8OkYug9aJ5JHmnD5LF+anJCV2RD3Voe3voY33oeLMvU2XzhyF7ucFog/GZPf+RTYKGOJ1qNFeTSsHSdYuX32VYJCsWBqbc6UoZq9vOCvUdfIfwXb/rD13DniNoYNcgEYytQvMLkNcwcarZ0lYhMkenaJihm/qvO9NpHb7rPGPGOpXE7tJHEfkTmGq9b6cRfi+HTdLcscBh0HnXuP/26IldRwa/LpI8eGnbJ1z+8ZdDNhJqqqpKBnkncqZLTh9ZVtD4yp5ThYERbb7wfGlcS1D3oqbxyjAm+XmKnhhimls4rdJNef/ig=
+    template:
+          - '%{repository}#%{build_number} (%{branch} - %{commit} : %{author}): %{message} (<a href="%{build_url}">Details</a>/<a href="%{compare_url}">Change view</a>)'
+    format: html

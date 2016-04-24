@@ -1,1 +1,1 @@
-include ':remembrance'
+include ':remembrance', ':remembrancegreendaogenerator'

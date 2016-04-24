@@ -3,6 +3,8 @@ package net.exshinigami.remembrance;
 import android.app.Activity;
 import android.os.Bundle;
 
+import net.net.exshinigami.remembrance.R;
+
 public class MainActivity extends Activity {
 
     @Override

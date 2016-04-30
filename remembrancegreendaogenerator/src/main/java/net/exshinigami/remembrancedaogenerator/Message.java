@@ -12,10 +12,13 @@ public class Message extends UploadEntity {
     public static final String COMMAND = "command";
 
     public static void addMessage(Entity user, Entity message) {
-        message.addIdProperty();
-        message.addStringProperty(TEXT);
-        message.addStringProperty(COMMAND);
-        message.addBooleanProperty(UPLOADED);
+        message.addIdProperty().autoincrement();
+        message.addStringProperty(TEXT).notNull();
+        message.addStringProperty(COMMAND).notNull();
+        message.addBooleanProperty(UPLOADED).notNull();
+        message.addDateProperty(CREATED).notNull();
+        message.addDateProperty(UPDATED).notNull();
+        message.addBooleanProperty(ENABLED).notNull();
 
         Property userId = message.addLongProperty(CommonProperty.USER_ID)
                 .notNull()

@@ -13,12 +13,13 @@ public class User extends BaseEntity{
     public static final String SPAM_COUNT = "spamCount";
 
     public static void addUser(Entity user) {
-        user.addIdProperty().notNull().autoincrement();
-        user.addIntProperty(MOBILE_NUMBER);
-        user.addStringProperty(TYPE);
-        user.addLongProperty(SMS_COUNT);
-        user.addLongProperty(SPAM_COUNT);
-
-//        user.setConstructors(false);
+        user.addIdProperty().autoincrement();
+        user.addStringProperty(MOBILE_NUMBER).notNull().unique();
+        user.addStringProperty(TYPE).notNull();
+        user.addLongProperty(SMS_COUNT).notNull();
+        user.addLongProperty(SPAM_COUNT).notNull();
+        user.addDateProperty(CREATED).notNull();
+        user.addDateProperty(UPDATED).notNull();
+        user.addBooleanProperty(ENABLED).notNull();
     }
 }

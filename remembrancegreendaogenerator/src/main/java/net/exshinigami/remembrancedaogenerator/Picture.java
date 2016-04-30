@@ -12,9 +12,12 @@ public class Picture extends UploadEntity{
     public static final String NAME = "name";
 
     public static void addPicture(Entity user, Entity picture) {
-        picture.addIdProperty();
-        picture.addStringProperty(NAME);
-        picture.addBooleanProperty(UPLOADED);
+        picture.addIdProperty().autoincrement();
+        picture.addStringProperty(NAME).notNull().unique();
+        picture.addBooleanProperty(UPLOADED).notNull();
+        picture.addDateProperty(CREATED).notNull();
+        picture.addDateProperty(UPDATED).notNull();
+        picture.addBooleanProperty(ENABLED).notNull();
 
         Property userId = picture.addLongProperty(CommonProperty.USER_ID)
                 .notNull()
